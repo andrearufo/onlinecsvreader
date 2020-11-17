@@ -4,13 +4,12 @@ var app = new Vue({
 	data: {
 		content: null,
 		table: null,
-		search: null,
-		separator: ','
+		search: null
 	},
 
 	computed: {
 		list(){
-			var list = this.table.body;
+			var list = this.table.data;
 
 			if (this.search) {
 				list = _.map(list, function(item){
@@ -39,35 +38,11 @@ var app = new Vue({
 		},
 
 		csvToJson(){
-			//credits: https://stackoverflow.com/a/27979069
 
-			var csv = this.content;
-			var lines = csv.split("\n");
-			var result = [];
-
-			// NOTE: If your columns contain commas in their values, you'll need
-			// to deal with those before doing the next step
-			// (you might convert them to &&& or something, then covert them back later)
-			// jsfiddle showing the issue https://jsfiddle.net/
-			var headers = lines[0].split( this.separator );
-
-			for(var i = 1; i < lines.length; i++){
-
-				var obj = {};
-				var currentline = lines[i].split( this.separator );
-
-				for(var j = 0; j < headers.length; j++){
-					obj[headers[j]] = currentline[j];
-				}
-
-				result.push(obj);
-
-			}
-
-			this.table = {
-				head: headers,
-				body: result
-			};
+			// ref. https://www.papaparse.com/docs
+			this.table = Papa.parse(this.content, {
+				header: true
+			});
 		}
 	}
 })

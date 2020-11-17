@@ -6,10 +6,11 @@
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js" integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww==" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js" integrity="sha512-rKFvwjvE4liWPlFnvH4ZhRDfNZ9FOpdkD/BU5gAIA3VS3vOQrQ5BjKgbO3kxebKhHdHcNUHLqxQYSoxee9UwgA==" crossorigin="anonymous"></script>
 
-	<title>Simple csv reader</title>
+	<title>Simple Online CSV reader</title>
 
 </head>
 <body>
@@ -22,20 +23,14 @@
 				<p class="lead">A simple and fast online CSV reader witout upload the file.</p>
 			</div>
 
-			<div class="card my-3" v-if="!table">
+			<div class="card my-3">
 				<div class="card-body">
 
 					<div class="row align-items-end">
-						<div class="col-lg-8">
+						<div class="col-lg">
 
 							<label for="csv">CSV file</label>
 							<input class="form-control" id="csv" name="csv" type="file" @change="loadFile" placeholder="Select your file...">
-
-						</div>
-						<div class="col-lg-2">
-
-							<label for="separator">Separator</label>
-							<input type="text" class="form-control" id="separator" name="separator" v-model="separator" placeholder="Separator">
 
 						</div>
 						<div class="col-lg-2">
@@ -48,6 +43,7 @@
 			</div>
 
 		</div>
+
 		<div class="container-fluid" v-if="table">
 
 			<div class="input-group mb-3">
@@ -57,10 +53,10 @@
 				<input type="search" class="form-control" v-model="search" placeholder="Search in table">
 			</div>
 
-			<table class="table table-stripped">
+			<table class="table table-responsive table-stripped table-hover">
 				<thead>
 					<tr>
-						<th v-for="(h, i) in table.head" :key="i">{{ h }}</th>
+						<th v-for="(h, i) in table.meta.fields" :key="i">{{ h }}</th>
 					</tr>
 				</thead>
 				<tbody>
