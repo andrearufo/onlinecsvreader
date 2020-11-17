@@ -25,13 +25,20 @@
 			<div class="card my-3" v-if="!table">
 				<div class="card-body">
 
-					<div class="row align-items-center">
-						<div class="col-lg-9">
+					<div class="row align-items-end">
+						<div class="col-lg-8">
 
-							<input id="csv" name="csv" class="form-control" type="file" @change="loadFile" placeholder="Select your file...">
+							<label for="csv">CSV file</label>
+							<input class="form-control" id="csv" name="csv" type="file" @change="loadFile" placeholder="Select your file...">
 
 						</div>
-						<div class="col-lg-3">
+						<div class="col-lg-2">
+
+							<label for="separator">Separator</label>
+							<input type="text" class="form-control" id="separator" name="separator" v-model="separator" placeholder="Separator">
+
+						</div>
+						<div class="col-lg-2">
 
 							<button class="btn btn-block btn-primary" type="button" name="button" @click="csvToJson">Convert</button>
 
