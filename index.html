@@ -4,11 +4,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js" integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww==" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js" integrity="sha512-rKFvwjvE4liWPlFnvH4ZhRDfNZ9FOpdkD/BU5gAIA3VS3vOQrQ5BjKgbO3kxebKhHdHcNUHLqxQYSoxee9UwgA==" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.13/vue.global.prod.min.js" integrity="sha512-66fV4MXSQdGN0KQxZ0Bw627HalhTQYQbOoF24EtMXN2FaAoKMgAZ7nDi77d9xWwrRjEEUfE+7rxjTt+cA2IuJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js" integrity="sha512-dfX5uYVXzyU8+KHqj8bjo7UkOdg18PaOtpa48djpNbZHwExddghZ+ZmzWT06R5v6NSk3ZUfsH6FNEDepLx9hPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 	<title>Simple Online CSV reader</title>
 
@@ -18,9 +18,10 @@
 
 		<div class="container">
 
-			<div class="jumbotron my-3">
+			<div class="p-5 bg-body-tertiary rounded-3 my-5">
 				<h1>Online CSV Reader</h1>
 				<p class="lead">A simple and fast online CSV reader witout upload the file.</p>
+				<p>Made by <a href="http://www.andrearufo.it/">Andrea Rufo</a></p>
 			</div>
 
 			<div class="card my-3">
@@ -29,13 +30,13 @@
 					<div class="row align-items-end">
 						<div class="col-lg">
 
-							<label for="csv">CSV file</label>
+							<label class="d-none" for="csv">CSV file</label>
 							<input class="form-control" id="csv" name="csv" type="file" @change="loadFile" placeholder="Select your file...">
 
 						</div>
 						<div class="col-lg-2">
 
-							<button class="btn btn-block btn-primary" type="button" name="button" @click="csvToJson">Convert</button>
+							<button class="btn btn-primary w-100" type="button" name="button" @click="csvToJson">Convert</button>
 
 						</div>
 					</div>
@@ -46,25 +47,27 @@
 
 		<div class="container-fluid" v-if="table">
 
+			<hr>
+
 			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<span class="input-group-text" id="basic-addon1">Search:</span>
-				</div>
+				<span class="input-group-text">Search:</span>
 				<input type="search" class="form-control" v-model="search" placeholder="Search in table">
 			</div>
 
-			<table class="table table-responsive table-stripped table-hover">
-				<thead>
-					<tr>
-						<th v-for="(h, i) in table.meta.fields" :key="i">{{ h }}</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="(d, r) in list" :key="r">
-						<td v-for="(a, c) in d" :key="c">{{ a }}</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="table-responsive">
+				<table class="table table-stripped table-hover">
+					<thead>
+						<tr>
+							<th v-for="(h, i) in table.meta.fields" :key="i">{{ h }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="(d, r) in list" :key="r">
+							<td v-for="(a, c) in d" :key="c">{{ a }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 
 		</div>
 

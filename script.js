@@ -1,18 +1,21 @@
-var app = new Vue({
-	el: '#app',
+const { createApp } = Vue;
 
-	data: {
-		content: null,
-		table: null,
-		search: null
+createApp({
+
+	data() {
+		return {
+			content: null,
+			table: null,
+			search: null
+		}
 	},
 
 	computed: {
-		list(){
+		list() {
 			var list = this.table.data;
 
 			if (this.search) {
-				list = _.map(list, function(item){
+				list = _.map(list, function (item) {
 					var s = JSON.stringify(item).toLowerCase();
 					if (s.includes(this.search.toLowerCase())) {
 						return item;
@@ -37,7 +40,7 @@ var app = new Vue({
 			reader.readAsText(file);
 		},
 
-		csvToJson(){
+		csvToJson() {
 
 			// ref. https://www.papaparse.com/docs
 			this.table = Papa.parse(this.content, {
@@ -45,4 +48,5 @@ var app = new Vue({
 			});
 		}
 	}
-})
+
+}).mount('#app');
